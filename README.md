@@ -1,6 +1,6 @@
-# testes-replit-gitpod
+# testes-node-replit-gitpod
 
-Fazendo testes com Node.js usando repl.it e gitpod
+Fazendo testes com Node.js usando repl.it e Gitpod
 
 
 ## Preparação
@@ -13,7 +13,7 @@ $ npm install   # para instalar todos os pacotes definidos em package.json
 
 ## Variáveis de ambiente
 
-Como estamos usando repositório público do GitHub, não devemos salvar senhas e outras informações privadas no repositório. Se isso acontecer, podemos ter problemas como aconteceu com o bot do GitHub que nos enviou email dizendo que nossas informações do ElephantSQL estavam abertas em um repositório público.
+Como estamos usando repositório público do GitHub, não devemos salvar senhas e outras informações privadas no repositório. Se isso acontecer, outros usuários terão acesso a essas informações.
 
 Vamos então colocar essas informações privadas em um arquivo `config.env`, que adicionamos ao `.gitignore` para não ser versionado pelo git.
 
@@ -31,7 +31,7 @@ Executar no terminal:
 
 ```shell
 $ git status                    # para ver as alterações pendentes
-$ git add <arquivo a enviar>
+$ git add <arquivo(s) a enviar>
 $ git commit -m "explicação resumida das alterações"
 $ git push -u origin master
 ```
@@ -41,5 +41,5 @@ $ git push -u origin master
 Abra o browser e acesse a URL:
 
 ```shell
-gitpod.io/#https://github.com/magouv/testes-replit-gitpod
+gitpod.io/#https://github.com/magouv/testes-node-replit-gitpod
 ```
