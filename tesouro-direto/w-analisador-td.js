@@ -14,8 +14,6 @@ class MovimentoTD {
     }
 }
 
-
-
 // cria Estoque inicial
 var estoqueTD = []
 var td1 = new MovimentoTD("M", "A", "LFT25", "1/2/2021", "c", "l1", 100, 1000)
@@ -48,48 +46,48 @@ function analisaNotaNegociacaoTD(recebEstoqueTD, recebNotaNeg) {
 
     var estoqueOrdenado = ordenaEstoquePorData(recebEstoqueTD)
 
-    for (let index = 0; index < recebNotaNeg.length; index++) {
-        const mov = recebNotaNeg[index];
+    // loop para percorrer a Nota de Negociação
+    for (let i = 0; i < recebNotaNeg.length; i++) {
+        const movNotaNeg = recebNotaNeg[i];
 
-        if (mov.indicadorCV === "c") {
-            mov.idLote = "l5"
-            operacoesFinais.push(mov)
+        // Roda todos os TDs da Nota de Neg.
+        if (movNotaNeg.indicadorCV === "c") {
+            movNotaNeg.idLote = "l5"
+            operacoesFinais.push(movNotaNeg)
         }
         else {
-          for (let index = 0; index < recebNotaNeg.length; index++) {
-            const movNn = recebNotaNeg[index]
+            var quantNNSaldo = movNotaNeg.quantidade
 
-            var quantVendSaldo = movNn.quantidade
+            // loop para todos os TDs em Estoque
+            for(let j = 0; j < recebEstoqueTD.length; j++) {
+              const movEstoq = recebEstoqueTD[j]
 
-            for(let i = 0; i < recebEstoqueTD.length; i++) {
-              const movEst = recebEstoqueTD[i]
-
-              if(movEst.codIsin === movNn.codIsin && movNn.indicadorCV === "v" && movEst.idCorretora === movNn.idCorretora) {
-                let quantComprado = movEst.quantidade
+              if(movEstoq.codIsin === movNotaNeg.codIsin && movNotaNeg.indicadorCV === "v" && movEstoq.idCorretora === movNotaNeg.idCorretora) {
+                let quantComprEst = movEstoq.quantidade
                 //console.log("passou por aqui:  " + movEst.idLote)
-                //console.log("passou por aqui:  " + quantVendSaldo)
-                //console.log("passou por aqui:  " + quantComprado)
+                //console.log("passou por aqui:  " + quantNNSaldo)
+                //console.log("passou por aqui:  " + quantComprEst)
 
-                if(quantVendSaldo >= quantComprado) {
-                  quantVendSaldo = quantVendSaldo - quantComprado
-                  }
+                if(quantNNSaldo >= quantComprEst) {
+                  quantNNSaldo = quantNNSaldo - quantComprEst
+                  } //Acho que essa conta não está sendo feita
                 
-                //console.log("Saldo da Venda   " + quantVendSaldo)
+                console.log("Saldo da Venda   " + quantNNSaldo)
+                console.log("Saldo da Est   " + quantComprEst)
 
-                if(quantVendSaldo == 0) {
-                  operacoesFinais.push(recebNotaNeg[index])
-                  console.log("passou por aqui")
+                if(quantNNSaldo <= 0) {
+                  operacoesFinais.push(recebNotaNeg[i])
+                  //console.log("passou por aqui")
                   }
                 }
-              }
+              } // final do For j
               
-            }
-            if(quantVendSaldo > 0){
+            if(quantNNSaldo > 0){
                 console.log("Você digitou o valor de venda ERRADO")
               }
 
-          }
-        }
+          } // final do IF
+        } // final do FOR i
     
 
     return operacoesFinais
