@@ -19,7 +19,7 @@ var estoqueTD = []
 var td1 = new MovimentoTD("M", "A", "LFT25", "1/2/2021", "c", "l1", 100, 1000)
 var td2 = new MovimentoTD("M", "B", "LFT25", "2/2/2021", "c", "l2", 20, 200)
 var td3 = new MovimentoTD("M", "A", "LTN35" ,"3/2/2021", "c", "l3", 50, 500)
-var td4 = new MovimentoTD("M", "A", "LFT25", "4/2/2021", "c", "l4", 100, 1000)
+var td4 = new MovimentoTD("M", "A", "LFT25", "4/2/2021", "c", "l4", 120, 1000)
 estoqueTD.push(td4)
 estoqueTD.push(td1)
 estoqueTD.push(td3)
@@ -56,24 +56,26 @@ function analisaNotaNegociacaoTD(recebEstoqueTD, recebNotaNeg) {
             operacoesFinais.push(movNotaNeg)
         }
         else {
-            var quantNNSaldo = movNotaNeg.quantidade
+            var quantNNSaldo = parseInt(movNotaNeg.quantidade)
+            console.log("Quant na NotNeg Saldo1   " + quantNNSaldo)
 
             // loop para todos os TDs em Estoque
             for(let j = 0; j < recebEstoqueTD.length; j++) {
               const movEstoq = recebEstoqueTD[j]
 
               if(movEstoq.codIsin === movNotaNeg.codIsin && movNotaNeg.indicadorCV === "v" && movEstoq.idCorretora === movNotaNeg.idCorretora) {
-                let quantComprEst = movEstoq.quantidade
+                let quantComprEst = parseInt(movEstoq.quantidade)
                 //console.log("passou por aqui:  " + movEst.idLote)
                 //console.log("passou por aqui:  " + quantNNSaldo)
-                //console.log("passou por aqui:  " + quantComprEst)
+                console.log("Quant Estoq Comprada2:  " + quantComprEst)
+                console.log("Quant na NotNeg Saldo3   " + quantNNSaldo)
 
                 if(quantNNSaldo >= quantComprEst) {
                   quantNNSaldo = quantNNSaldo - quantComprEst
                   } //Acho que essa conta não está sendo feita
                 
-                console.log("Saldo da Venda   " + quantNNSaldo)
-                console.log("Saldo da Est   " + quantComprEst)
+                console.log("Quant na NotNeg Saldo4   " + quantNNSaldo)
+                console.log("Quant Estoq Comprada5   " + quantComprEst)
 
                 if(quantNNSaldo <= 0) {
                   operacoesFinais.push(recebNotaNeg[i])
