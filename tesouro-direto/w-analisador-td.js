@@ -32,7 +32,7 @@ var mov2 = new MovimentoTD("M", "A", "NTNB45", "6/2/2021", "c", null, 200, 2200)
 var mov3 = new MovimentoTD("M", "A", "LFT25", "6/2/2021", "v", null, 100, 1250)
 notaNeg.push(mov1)
 notaNeg.push(mov2)
-notaNeg.push(mov3)
+notaNeg.push(mov3) // Teste de uma segunda venda igual a primeira no mesmo dia
 
 // Chama a Função para processar a Nota de Negociação
 var opFinais = analisaNotaNegociacaoTD(estoqueTD, notaNeg)
@@ -80,7 +80,7 @@ function analisaNotaNegociacaoTD(recebEstoqueTD, recebNotaNeg) {
                 //console.log("Quant Estoq Comprada5   " + quantComprEst)
 
                 if(quantNNSaldo <= 0) {
-                  operacoesFinais.push(recebNotaNeg[i])
+                  operacoesFinais.push(recebNotaNeg[i]) // Evitar que ele cadastrre duas vezes o mesmo pedido
                   //console.log("passou por aqui")
                   }
                 }
