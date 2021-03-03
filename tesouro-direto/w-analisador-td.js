@@ -19,7 +19,7 @@ var estoqueTD = []
 var td1 = new MovimentoTD("M", "A", "LFT25", "1/2/2021", "c", "l1", 100, 1000)
 var td2 = new MovimentoTD("M", "B", "LFT25", "2/2/2021", "c", "l2", 20, 200)
 var td3 = new MovimentoTD("M", "A", "LTN35" ,"3/2/2021", "c", "l3", 50, 500)
-var td4 = new MovimentoTD("M", "A", "LFT25", "4/2/2021", "c", "l4", 100, 1000)
+var td4 = new MovimentoTD("M", "A", "LFT25", "4/2/2021", "c", "l4", 20, 1000)
 estoqueTD.push(td4)
 estoqueTD.push(td1)
 estoqueTD.push(td3)
@@ -50,7 +50,8 @@ function analisaNotaNegociacaoTD(recebEstoqueTD, recebNotaNeg) {
 
     // loop para percorrer a Nota de Negociação
     for (let i = 0; i < recebNotaNeg.length; i++) {
-        const movNotaNeg = recebNotaNeg[i];
+        const movNotaNeg = recebNotaNeg[i]
+        console.log("Rodou NN:" + movNotaNeg.quantidade)
 
         // Roda todos os TDs da Nota de Neg.
         if (movNotaNeg.indicadorCV === "c") {
@@ -58,19 +59,20 @@ function analisaNotaNegociacaoTD(recebEstoqueTD, recebNotaNeg) {
             operacoesFinais.push(movNotaNeg)
         }
         else {
-            var quantNNSaldo = parseInt(movNotaNeg.quantidade)
+            var quantNNSaldo = movNotaNeg.quantidade
             //console.log("Quant na NotNeg Saldo1   " + quantNNSaldo)
 
             // loop para todos os TDs em Estoque
-            for(let j = 0; j < recebEstoqueTD.length; j++) {
-              const movEstoq = recebEstoqueTD[j]
+            for(let j = 0; j < estoqueOrdenado.length; j++) {
+              const movEstoq = estoqueOrdenado[j]
+              console.log("Rodou Estoque:   " + movEstoq.quantidade + "/" + movEstoq.idLote)
 
               if(movEstoq.codIsin === movNotaNeg.codIsin && movNotaNeg.indicadorCV === "v" && movEstoq.idCorretora === movNotaNeg.idCorretora) {
-                let quantComprEst = parseInt(movEstoq.quantidade)
+                let quantComprEst = movEstoq.quantidade
                 //console.log("passou por aqui:  " + movEst.idLote)
                 //console.log("passou por aqui:  " + quantNNSaldo)
                 //console.log("Quant Estoq Comprada2:  " + quantComprEst)
-                //console.log("Quant na NotNeg Saldo3   " + quantNNSaldo)
+                console.log("Quant na NotNeg Saldo3   " + quantNNSaldo)
 
                 if(movEstoq.quantidade >= quantComprEst) {
                   quantNNSaldo = quantNNSaldo - quantComprEst
@@ -80,7 +82,10 @@ function analisaNotaNegociacaoTD(recebEstoqueTD, recebNotaNeg) {
                 //console.log("Quant Estoq Comprada5   " + quantComprEst)
 
                 if(quantNNSaldo <= 0) {
-                  operacoesFinais.push(recebNotaNeg[i]) // Evitar que ele cadastrre duas vezes o mesmo pedido
+                  operacoesFinais.push(recebNotaNeg[i]) 
+                  console.log("Ver se zerou Estoque  " + j)
+                  estoqueOrdenado.splice(j,1)
+                  console.log("Ver se zerou Estoque  " + j)
                   //console.log("passou por aqui")
                   }
                 }
@@ -88,6 +93,7 @@ function analisaNotaNegociacaoTD(recebEstoqueTD, recebNotaNeg) {
               
             if(quantNNSaldo > 0){
                 console.log("Quantidade de Venda é MAIOR do que a Compra")
+                estoqueOrdenado = []
               }
 
           } // final do IF
