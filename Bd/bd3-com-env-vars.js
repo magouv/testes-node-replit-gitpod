@@ -10,7 +10,7 @@ testeBancoDeDados()
 
 
 function inicializaBackend() {
-    dotenv.config({path: "config.env"})     // carrega as variáveis de ambiente definidas em config.env
+    dotenv.config()     // carrega as variáveis de ambiente definidas em config.env
 
     // Vamos testar uma variável de ambiente
     console.log(`Executando: ${process.env.APP_NAME}`)
