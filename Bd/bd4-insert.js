@@ -26,10 +26,15 @@ async function testeDatabaseInsert() {
 
     await client.connect()
 
-    const sql = `SELECT * FROM tesouro_direto where ind_cv = $1;`
-    const result = await client.query(sql, ["v"])
+    let d = new Date("2021-2-1")
 
-    console.log(result.rows)
+    const sql = `INSERT INTO public.tesouro_direto
+        (codigo, ind_cv, data_negoc, quant, valor_liq)
+        VALUES($1, $2, $3, $4, $5);`
+
+    await client.query(sql, ["WAL2", "c", d, 30, 3000])
+
+  
 
     await client.end()
 }
